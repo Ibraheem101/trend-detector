@@ -34,7 +34,7 @@ services:
     depends_on:
       - pgdatabase
     ports:
-      - "5000:5000"
+      - "8000:8000"
     restart: unless-stopped
 
   ingestion:
@@ -58,3 +58,5 @@ services:
       - pgdatabase
     volumes:
       - ./services/frontend:/app
+    ports:
+      - 3000:3000
