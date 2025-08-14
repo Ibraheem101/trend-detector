@@ -44,7 +44,7 @@ services:
     depends_on:
       - pgdatabase
     volumes:
-      - ./:/app
+      - ./shared:/app/shared
     restart: unless-stopped
 
   frontend:
