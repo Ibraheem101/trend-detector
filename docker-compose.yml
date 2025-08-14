@@ -9,6 +9,11 @@ services:
       - "./trends_postgres_data:/var/lib/postgresql/data:rw"
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
 
     
@@ -19,6 +24,8 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     volumes:
       - "./data_pgadmin:/var/lib/pgadmin"
+    depends_on:
+      - pgdatabase
     ports:
       - "8080:80"
     restart: unless-stopped
@@ -32,7 +39,8 @@ services:
     volumes:
       - ./shared:/app/shared
     depends_on:
-      - pgdatabase
+      pgdatabase:
+        condition: service_healthy
     ports:
       - "8000:8000"
     restart: unless-stopped
@@ -45,7 +53,8 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - PYTHONUNBUFFERED=1
     depends_on:
-      - pgdatabase
+      pgdatabase:
+        condition: service_healthy
     volumes:
       - ./shared:/app/shared
     restart: unless-stopped
@@ -55,7 +64,8 @@ services:
       context: ./services/frontend
     container_name: trend-frontend
     depends_on:
-      - pgdatabase
+      pgdatabase:
+        condition: service_healthy
     volumes:
       - ./services/frontend:/app
     ports:
