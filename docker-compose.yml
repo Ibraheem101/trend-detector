@@ -51,7 +51,7 @@ services:
 
   frontend:
     build: 
-      context: ./services/dashboard
+      context: ./services/frontend
     container_name: trend-frontend
     depends_on:
       - pgdatabase
