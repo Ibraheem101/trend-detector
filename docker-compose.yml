@@ -28,6 +28,8 @@ services:
     container_name: trend-api
     environment:
      - DATABASE_URL=${DATABASE_URL}
+    volumes:
+      - ./shared:/app/shared
     depends_on:
       - pgdatabase
     ports:
