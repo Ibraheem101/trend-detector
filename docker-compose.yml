@@ -47,4 +47,11 @@ services:
       - ./:/app
     restart: unless-stopped
 
-  dashboard:
+  frontend:
+    build: 
+      context: ./services/dashboard
+    container_name: trend-frontend
+    depends_on:
+      - pgdatabase
+    volumes:
+      - ./services/frontend:/app
