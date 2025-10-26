@@ -1,11 +1,14 @@
+#type: ignore
 import os
 import uuid
+from dotenv import load_dotenv
 from sqlalchemy.sql import func
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, String, Text, Integer, Float, Boolean, DateTime, ARRAY
 
+load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -23,4 +26,3 @@ class Rawpost(Base):
     created_at = Column(DateTime(timezone=True))
     scraped_at = Column(DateTime(timezone=True), server_default=func.now())
     processed = Column(Boolean, default=False)
-    
