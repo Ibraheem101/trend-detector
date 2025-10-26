@@ -32,7 +32,8 @@ services:
 
   app:
     build:
-      context: ./services/api
+      context: .
+      dockerfile: services/api/Dockerfile
     container_name: trend-api
     environment:
      - DATABASE_URL=${DATABASE_URL}
