@@ -29,7 +29,15 @@ class HackerNewsScraper():
         response.raise_for_status()
         return response.json()
     
-    def save_to_database():
+    def save_to_database(self, db: Session, story: dict) -> bool:
         """"""
+        existing = db.query(Rawpost).filter(
+            Rawpost.source == "hackernews",
+            Rawpost.source_id == str(story['id'])
+        ).first()
+
+        if existing:
+            print(f"Story {story['id']} already exists. Skipping...")
+            return False
         return None
 
